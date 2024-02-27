@@ -2,6 +2,10 @@
   LSystem.java
 
   展示如何使用Vector字元容器，實作符合L系統文法的簡單字元序列生成器
+  L系統文法的規則如下：
+    S -> L
+    L -> S L
+  這個程式會讀取一個整數n，然後產生n個字元序列，每個字元序列都是由上述規則產生的
 
 > java -cp bailey.jar ch03_vectors.LSystem.java
 6
