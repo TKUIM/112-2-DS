@@ -23,14 +23,14 @@ public class HW1_Vector
 {
    int capacity;  // 容量
    int length;    // 用量
-   int data[];    // 資料空間
+   int array[];    // 資料空間
    
    // 建立向量容器,初始容量16,長度0,配置資料空間
    public HW1_Vector()
    {
       capacity = 16;
       length = 0;
-      data = new int[capacity];
+      array = new int[capacity];
    }
    
    // 確保向量容器的容量至少為size，不然以2倍作擴充及拷貝
