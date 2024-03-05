@@ -5,9 +5,9 @@
 ### Unique.java 唯一清單
   利用單鏈結清單放不重複字串，於加入時，不重複加入已有字串
 ### ParkingLot.java  停車格應用
-  1大6中3小停車格的空位管理，含出租及歸還
+  1大6中3小停車格的空位管理，含出租、歸還作業
 ### ParkingLot2.java  停車格應用
-  1大6中3小停車格的空位管理，含出租，歸還，查詢
+  1大6中3小停車格的空位管理，含出租，歸還，列印合約作業
 ### AbstractList.java 抽象清單
   isEmpty/contains/get/getFirst/getLast
   add/addFirst/addLast/remove/removeFirst/removeLast/
