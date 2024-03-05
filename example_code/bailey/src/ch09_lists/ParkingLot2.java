@@ -1,5 +1,7 @@
+/* ParkingLot2.java
+*   停車格應用2，1大6中3小停車格的空位管理，含出租，歸還，查詢
+*/
 package ch09_lists;
-
 import structure5.*;
 import java.util.Iterator;
 public class ParkingLot2
@@ -21,7 +23,7 @@ public class ParkingLot2
         ReadStream r = new ReadStream();
         for (r.skipWhite(); !r.eof(); r.skipWhite())
         {
-            String command = r.readString(); // rent/return
+            String command = r.readString(); // rent/return/contracts
             /*
               ...
             */

@@ -1,14 +1,22 @@
+/*
+* ParkingLot.java
+*   停車格應用，1大6中3小停車格的空位管理，含出租及歸還
+*/
 package ch09_lists;
-
 import structure5.*;
 import java.util.Scanner;
 public class ParkingLot
 {
     public static void main(String[] args)
     {
+        // 空位清單，記錄所有10格空位，含1大、6中、3小停車格
         List<Space> free = new SinglyLinkedList<Space>();  // available
+        
+        // 租借清單，記錄所有(人名,空位)配對
         List<Association<String,Space>> rented = 
             new SinglyLinkedList<Association<String,Space>>(); // rented spaces
+        
+        // 配置10格空位，含1大、6中、3小停車格
         for (int number = 0; number < 10; number++) 
         {
             if (number < 3) // three small spaces
@@ -18,53 +26,74 @@ public class ParkingLot
             else // one large space
                 free.add(new Space(number,Space.TRUCK));
         }
-        Scanner s = new Scanner(System.in);
+        
+        // 作業指令
+        //   rent {small | medium | large} name
+        //   return name
+        Scanner s = new Scanner(System.in); // 從鍵盤進行停車格空位管理作業
         while (s.hasNext())
         {
-            String command = s.next(); // rent/return
+            String command = s.next(); // rent/return 接收作業指令
             /*
               ...
             */
             Space location;
+            // 租借作業
             if (command.equals("rent"))
             {   // attempt to rent a parking space
-                String size = s.next();
-                Space request;
+                String size = s.next();  // 詢問空位型別
+                Space request; // 製作查詢型別的空位
                 if (size.equals("small")) 
                     request = new Space(0,Space.COMPACT);
                 else if (size.equals("medium")) 
                     request = new Space(0,Space.MINIVAN);
                 else request = new Space(0,Space.TRUCK);
+                
                 // check free list for appropriate-sized space
+                // 查詢空位清單，找尋符合型別的空位
                 if (free.contains(request)) 
                 {   // a space is available
+                    // 若有空位，從空位清單，移除該型別的空位
                     location = free.remove(request);
-                    String renter = s.next(); // to whom?
+                    String renter = s.next(); // to whom? 詢問人名
+                    
                     // link renter with space description
+                    // 添加(人名,空位)配對到租借清單
                     rented.add(new Association<String,Space>(renter,location));
                     System.out.println("Space "+location.number+" rented.");
                 } else {
+                    // 若無空位，印抱歉訊息
                     System.out.println("No space available. Sorry.");
                 }
             }
             else
+            // 歸還作業
             if (command.equals("return")){
-                String renter = s.next(); // from whom?
+                String renter = s.next(); // from whom? 詢問人名
+                
                 // template for finding "rental contract"
+                // 以租借人名製作查詢配對
                 Association<String,Space> query = new Association<String,Space>(renter);
+                
+                //  查詢租借清單，找尋符合租借人名的(人名,空位)配對
                 if (rented.contains(query))
                 {   // contract found
+                    // 若找到，從租借清單，移除取出(人名,空位)配對
                     Association<String,Space> contract =
                         rented.remove(query);
-                    location = contract.getValue(); // where?
-                    free.add(location); // put in free list
+                    location = contract.getValue(); // where? 從配對取得人名對應的空位
+                    free.add(location); // put in free list 將空位加回空位清單
                     System.out.println("Space "+location.number+" is now free.");
                 } else {
+                    // 若未找到，印錯誤訊息
                     System.out.println("No space rented to "+renter);
                 }
             }
+            // 遇rent,return之外指令，則退出
             else break;
         }
+        
+        // 印空位清單長度，即剩餘空位數
         System.out.println(free.size()+" slots remain available.");
     }
 }
