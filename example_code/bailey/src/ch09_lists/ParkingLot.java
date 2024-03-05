@@ -1,9 +1,27 @@
 /*
 * ParkingLot.java
 *   停車格應用，1大6中3小停車格的空位管理，含出租及歸還
+*
+* > java -cp structure5.jar;. ParkingLot
+rent small Alice
+Space 0 rented.
+rent large Bob
+Space 9 rented.
+rent small Carol
+Space 1 rented.
+return Alice
+Space 0 is now free.
+return David
+No space rented to David
+rent small David
+Space 2 rented.
+rent small Eva
+Space 0 rented.
+quit
+6 slots remain available.
 */
 package ch09_lists;
-import structure5.*;
+import structure5.Association;
 import java.util.Scanner;
 public class ParkingLot
 {
@@ -98,25 +116,30 @@ public class ParkingLot
     }
 }
 
+// 車位空格
 class Space
 {   // structure describing parking space
-    public final static int COMPACT = 0; // small space
-    public final static int MINIVAN = 1; // medium space
-    public final static int TRUCK = 2;   // large space
-    protected int number;       // address in parking lot
-    protected int size;         // size of space
+    public final static int COMPACT = 0; // small space 小型
+    public final static int MINIVAN = 1; // medium space 中型
+    public final static int TRUCK = 2;   // large space 大型
+    protected int number;       // address in parking lot 車位編號
+    protected int size;         // size of space 車位型別, 0,1,2
+    
+    // 建立一格車位，車位編號n，型別s=0,1,2
     public Space(int n, int s)
     // post: construct parking space #n, size s
     {
         number = n;
         size = s;
     }
+    
+    // 判別本車位和other車位兩者型別是否相同
     public boolean equals(Object other)
     // pre: other is not null
     // post: true iff spaces are equivalent size
     {
-        Space that = (Space)other;
-        return this.size == that.size;
+        Space that = (Space)other; // 轉型為車位才能取型別欄位
+        return this.size == that.size; // 只比較兩者型別相同否
     }
 }
 
