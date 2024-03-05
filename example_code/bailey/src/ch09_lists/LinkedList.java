@@ -1,3 +1,5 @@
+package ch09_lists;
+
 // Implementation of lists, using doubly linked elements, and dummy nodes.
 // Starter class for List-based lab.
 

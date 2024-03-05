@@ -1,6 +1,6 @@
 // Elements used in implementation of doubly linked lists.
 // (c) 1998, 2001 duane a. bailey
-package structure5;
+package ch09_lists;
 
 /**
  * A class supporting a doubly linked list element.  Each element

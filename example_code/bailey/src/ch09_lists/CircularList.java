@@ -1,8 +1,9 @@
 // Implementation of circular lists, using singly linked elements.
 // (c) 1998, 2001 duane a. bailey
 
-package structure5;
+package ch09_lists;
 import java.util.Iterator;
+import structure5.Assert;
 /**
  * An implementation of lists using circularly linked elements, 
  * similar to that of {@link java.util.LinkedList java.util.LinkedList}.

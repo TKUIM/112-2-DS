@@ -1,6 +1,6 @@
 // Implementation of a node of a singly linked list.
 // (c) 1998, 2001 duane a. bailey
-package structure5;
+package ch09_lists;
 
 /**
  * A class supporting a singly linked list element.  Each element

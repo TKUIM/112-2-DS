@@ -1,5 +1,6 @@
-package structure5;
+package ch09_lists;
 import java.util.Iterator;
+import structure5.AbstractStructure;
 /**
  * An abstract structure implementing features common to all
  * list-like structures in this package.

@@ -4,7 +4,7 @@
 
 package ch03_vectors;
 // package structure5;
-import structure5.AbstractList;
+import ch09_lists.AbstractList;
 import structure5.Assert;
 import java.util.Iterator;
 import java.util.Collection;

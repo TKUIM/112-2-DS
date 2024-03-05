@@ -1,6 +1,6 @@
 // Implementation of an iterator for elements of a singly linked list.
 // (c) 1998, 2001 duane a. bailey
-package structure5;
+package ch09_lists;
 /**
  * An iterator for traversing the elements of a singly linked list.
  * The iterator traverses the list beginning at the head, and heads toward

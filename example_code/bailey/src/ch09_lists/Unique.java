@@ -1,3 +1,5 @@
+package ch09_lists;
+
 // List unique lines from input.
 // (c) 1996, 2001 duane a. bailey
 

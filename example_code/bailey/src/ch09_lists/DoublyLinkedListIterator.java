@@ -1,4 +1,4 @@
-package structure5;
+package ch09_lists;
 /**
  * An iterator for traversing the elements of a doubly linked list.
  * The iterator traverses the list beginning at the head, and heads toward
