@@ -1,6 +1,29 @@
 /* ParkingLot2.java
 *   停車格應用2，1大6中3小停車格的空位管理，含出租，歸還，列印合約
 *
+* > java -cp structure5.jar;. ParkingLot
+rent small Alice
+rent large Bob
+rent small Carol
+return Alice
+return David
+rent small David
+rent small Eva
+contracts
+quit
+
+Space 0 rented.
+Space 9 rented.
+Space 1 rented.
+Space 0 is now free.
+No space rented to David.
+Space 2 rented.
+Space 0 rented.
+Bob is renting 9
+Carol is renting 1
+David is renting 2
+Eva is renting 0
+6 slots remain available.
 */
 package ch09_lists;
 import structure5.ReadStream;
