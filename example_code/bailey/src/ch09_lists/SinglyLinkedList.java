@@ -1,5 +1,10 @@
 // Implementation of lists, using singly linked elements.
 // (c) 1998, 2001 duane a. bailey
+/*
+   SinglyLinkedList.java 單向鏈結清單
+     內含長度count，首節點指標head
+
+*/
 
 package ch09_lists;
 import java.util.Iterator;
@@ -78,11 +83,16 @@ public class SinglyLinkedList<E> extends AbstractList<E>
      * 
      * @param value The value to be added to head of list.
      */
+    // 加首元素value
     public void addFirst(E value)
     {
         // note order that things happen:
         // head is parameter, then assigned
+        // 建立新節點，其data值為value，其nextElement指標指向 head 節點
+        // head指標指向新節點
         head = new Node<E>(value, head);
+        
+        // 清單長度加1
         count++;
     }
 
@@ -109,20 +119,31 @@ public class SinglyLinkedList<E> extends AbstractList<E>
      * 
      * @param value The value to be added to tail of list.
      */
+    // 加尾元素value
     public void addLast(E value)
     {
         // location for new value
+        // 配置 temp 新節點，其data值為value，其nextElement指標為空
         Node<E> temp = new Node<E>(value,null);
+        
+        // 若清單有首節點
         if (head != null)
         {
             // pointer to possible tail
-            Node<E> finger = head;
-            while (finger.next() != null)
+            // 迭代找尾節點，其特徵為節點的nextElement指標為空
+            Node<E> finger = head; // finger指標從指向head首節點開始
+            while (finger.next() != null) // 若finger節點的nextElement指標非空
             {
-                finger = finger.next();
+                finger = finger.next(); // finger指標指向下一個節點
             }
-            finger.setNext(temp);
-        } else head = temp;
+            
+            // finger指標找到清單尾節點
+            finger.setNext(temp); // 尾節點的指標指向temp新節點
+        } 
+        // 若清單無首節點，讓temp當首節點
+        else head = temp;
+        
+        // 清單長度加1
         count++;
     }
 

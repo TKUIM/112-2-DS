@@ -1,5 +1,9 @@
 // Implementation of a node of a singly linked list.
 // (c) 1998, 2001 duane a. bailey
+/*
+*  Node.java 節點，供單向鍵結清單使用
+*    內部結構含data元素，nextElement下個節點指標
+*/
 package ch09_lists;
 
 /**
@@ -10,16 +14,17 @@ package ch09_lists;
  * @version $Id: Node.java 31 2007-08-06 17:19:56Z bailey $
  * @author, 2001 duane a. bailey
  */
+// 節點
 public class Node<E>
 {
     /**
      * The data value stored in this node.
      */
-    protected E data; // value stored in this element
+    protected E data; // value stored in this element 元素
     /**
      * Reference to the next node in the list.
      */
-    protected Node<E> nextElement; // ref to next
+    protected Node<E> nextElement; // ref to next 下個節點指標
 
     /**
      * Construct a singly linked list element.
@@ -29,6 +34,7 @@ public class Node<E>
      * @param v The value to be referenced by this element.
      * @param next A reference to the next value in the list.
      */
+    // 節點建構子，data欄位值v，nextElement欄位值next
     public Node(E v, Node<E> next)
     {
         data = v;
@@ -100,6 +106,7 @@ public class Node<E>
      * 
      * @return The string representing element.
      */
+    // 回傳節點內容字串
     public String toString()
     {
         return "<Node: "+value()+">";
