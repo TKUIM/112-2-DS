@@ -524,11 +524,12 @@ public class SinglyLinkedList<E> extends AbstractList<E>
         Node<E> finger = head;
 
         // search for value or end of list, counting along way
-        while (finger != null && !finger.value().equals(value))
+        while (finger != null && !finger.value().equals(value)) // 第1次找到就跳出迴圈
         {
             finger = finger.next();
             i++;
         }
+        // 迴圈結束時，finger指標指向value元素，或指向空
 
         // finger points to value, i is index
         if (finger == null)
@@ -559,16 +560,17 @@ public class SinglyLinkedList<E> extends AbstractList<E>
         Node<E> finger = head;
 
         // search for last matching value, result is desired index
-        while (finger != null)
+        while (finger != null) // 強迫找到最後
         {
             // a match? keep track of location
-            if (finger.value().equals(value)) result = i;
+            if (finger.value().equals(value)) result = i; // 覆蓋上回找到位置
             finger = finger.next();
             i++;
         }
+        // 迴圈結束時，finger指標指向空
 
         // return last match
-        return result;
+        return result;  // 回傳最後一次找到的位置
     }
 
     /**

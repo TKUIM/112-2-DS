@@ -96,6 +96,9 @@ public class DoublyLinkedList<E> extends AbstractList<E>
     // 於清單頭位置加入value資料
     public void addFirst(E value)
     {
+        // 目前順序: head
+        // 目標順序: newElement <-> head
+
         // construct a new element, making it head
         // 首節點指標指向新節點
         // 新節點的next欄位指向原首節點
@@ -123,6 +126,9 @@ public class DoublyLinkedList<E> extends AbstractList<E>
     {
         // 防呆檢查，若清單為空，則拋出例外
         Assert.pre(!isEmpty(),"List is not empty.");
+
+        // 目前順序: head <-> head.next ...
+        // 目標順序: head.next ...
 
         DoublyLinkedNode<E> temp = head;  // 備份首元素指標
 
@@ -159,6 +165,9 @@ public class DoublyLinkedList<E> extends AbstractList<E>
     // 於清單尾位置加入value資料
     public void addLast(E value)
     {
+        // 目前順序: tail
+        // 目標順序: tail <-> newElement
+        
         // construct new element
         // 新節點沒有下個節點
         // 新節點的上個節點為原來尾節點
@@ -185,6 +194,9 @@ public class DoublyLinkedList<E> extends AbstractList<E>
     public E removeLast()
     {
         Assert.pre(!isEmpty(),"List is not empty.");
+
+        // 目前順序: ... tail.previous <-> tail
+        // 目標順序: ... tail.previous
 
         DoublyLinkedNode<E> temp = tail; // 備份尾元素指標
 
@@ -272,6 +284,7 @@ public class DoublyLinkedList<E> extends AbstractList<E>
         {
             finger = finger.next();
         }
+        // 離開迴圈時，finger指向value值所在節點 或 finger為空
         
         return finger != null; // 回傳是否找到value值
     }
@@ -299,11 +312,12 @@ public class DoublyLinkedList<E> extends AbstractList<E>
             finger = finger.next();
         }
         // 迴圈離開時，finger指向value值所在節點 或 finger為空
+        // 目前順序: finger.previous <-> finger <-> finger.next
+        // 目標順序: finger.previous <-> finger.next
 
         if (finger != null)
         {
             // fix next field of element above
-            // 三節點順序: finger.previous <-> finger <-> finger.next
             // 通例處理: 若finger.previous節點非空
             //    讓 finger.previous 下一個節點為 finger.next
             if (finger.previous() != null)
@@ -317,7 +331,6 @@ public class DoublyLinkedList<E> extends AbstractList<E>
             }
             
             // fix previous field of element below
-            // 三節點順序: finger.previous <-> finger <-> finger.next
             // 通例處理: 若finger.next節點非空
             //    讓 finger.next 前一個節點為 finger.previous
             if (finger.next() != null)
@@ -399,6 +412,7 @@ public class DoublyLinkedList<E> extends AbstractList<E>
             finger = finger.next();
             i--;
         }
+        // 離開迴圈時，finger指向第i個節點  
 
         // not end of list, return value found
         return finger.value();
@@ -426,6 +440,7 @@ public class DoublyLinkedList<E> extends AbstractList<E>
             finger = finger.next();
             i--;
         }
+        // 離開迴圈時，finger指向第i個節點  
         
         // get old value, update new value
         E result = finger.value(); // 備份原本的值   
@@ -466,10 +481,10 @@ public class DoublyLinkedList<E> extends AbstractList<E>
                 i--;
             }
             // 迴圈離開時，before指向第i-1個節點，after指向第i個節點
-            
-            // create new value to insert in correct position
             // 原來順序: before <-> after
             // 目標順序: before <-> current <-> after
+            
+            // create new value to insert in correct position
             // 新節點的前一個節點為before，後一個節點為after
             DoublyLinkedNode<E> current =
                 new DoublyLinkedNode<E>(o,after,before);
@@ -515,10 +530,10 @@ public class DoublyLinkedList<E> extends AbstractList<E>
             finger = finger.next(); // 
             i--;
         }
-        // 迴圈離開時，previous指向第i-1個節點，finger指向第i個節點
-        
+        // 迴圈離開時，previous指向第i-1個節點，finger指向第i個節點       
         // 原來順序: previous <-> finger <-> finger.next
         // 目標順序: previous <-> finger.next
+
         // previous節點的下個節點為，跳過finger節點，接到其下個節點
         previous.setNext(finger.next());
 
@@ -547,12 +562,15 @@ public class DoublyLinkedList<E> extends AbstractList<E>
     {
         int i = 0;
         DoublyLinkedNode<E> finger = head;
+        
         // search for value or end of list, counting along way
         while (finger != null && !finger.value().equals(value))
         {
             finger = finger.next();
             i++;
         }
+        // 離開迴圈時，finger指向value值所在節點 或 finger為空
+
         // finger points to value, i is index
         if (finger == null)
         {   // value not found, return indicator
@@ -586,6 +604,7 @@ public class DoublyLinkedList<E> extends AbstractList<E>
             finger = finger.previous();
             i--;
         }
+        // 離開迴圈時，finger指向value值所在節點 或 finger為空       
         
         if (finger == null)
         {   // value not found, return indicator
