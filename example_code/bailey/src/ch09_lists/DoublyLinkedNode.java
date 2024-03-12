@@ -1,5 +1,9 @@
 // Elements used in implementation of doubly linked lists.
 // (c) 1998, 2001 duane a. bailey
+/*  
+    DoublyLinkedNode.java 節點，供雙向鍵結清單使用
+*    內部結構含data元素，previousElement前個節點指標，nextElement下個節點指標
+*/
 package ch09_lists;
 
 /**
@@ -13,20 +17,23 @@ package ch09_lists;
  * @author, 2001 duane a. bailey
  * @see structure.DoublyLinkedList
  */
+// 雙向鍵結清單節點
 public class DoublyLinkedNode<E>
 {
     /**
      * The actual value stored within element; provided by user.
      */
-    protected E data;
+    protected E data;  // 元素
     /**
      * The reference of element following.
      */
-    protected DoublyLinkedNode<E> nextElement;
+    protected DoublyLinkedNode<E> nextElement;  // 下個節點指標
     /**
      * The reference to element preceding.
      */
-    protected DoublyLinkedNode<E> previousElement;
+    protected DoublyLinkedNode<E> previousElement; // 前個節點指標
+
+    
 
     /**
      * Construct a doubly linked list element.
@@ -35,16 +42,19 @@ public class DoublyLinkedNode<E>
      * @param next The reference to the next element.
      * @param previous The reference to the previous element.
      */
+    // 節點建構子，data欄位值v，nextElement欄位值next，previousElement欄位值previous
     public DoublyLinkedNode(E v,
                             DoublyLinkedNode<E> next,
                             DoublyLinkedNode<E> previous)
     {
         data = v;
+
         nextElement = next;
-        if (nextElement != null)
+        if (nextElement != null) // 若下個節點非空，則設定下個節點的前個節點為本節點
             nextElement.previousElement = this;
+
         previousElement = previous;
-        if (previousElement != null)
+        if (previousElement != null) // 若前個節點非空，則設定前個節點的下個節點為本節點
             previousElement.nextElement = this;
     }
 
@@ -173,6 +183,7 @@ public class DoublyLinkedNode<E>
      * 
      * @return The string representing element.
      */
+    // 回傳節點內容字串
     public String toString()
     {
         return "<DoublyLinkedNode: "+value()+">";
