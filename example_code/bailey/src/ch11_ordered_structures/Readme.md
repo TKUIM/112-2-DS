@@ -11,6 +11,7 @@
   locate/contains/iterator/isEmpty/size/
   add/remove
 ### Sort.java 排序
+  利用有序向量於加入數字時依序放置，列印排序結果
 ### NaturalComparator.java 自然比較器
   compare/equals
 ### ReverseComparator.java 反序比較器
