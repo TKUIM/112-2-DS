@@ -65,7 +65,7 @@ public class OrderedList<E extends Comparable<E>>
      *
      * @post constructs an empty ordered list
      */
-	// 利用自然比較器建立空的有序清單
+    // 利用自然比較器建立空的有序清單
     public OrderedList()
     {
         this(new NaturalComparator<E>());
@@ -77,7 +77,7 @@ public class OrderedList<E extends Comparable<E>>
      * @param ordering the Comparator to be used in comparison
      * @post constructs an empty ordered list ordered by ordering
      */
-	// 利用ordering比較器,建立空的有序清單
+    // 利用ordering比較器,建立空的有序清單
     public OrderedList(Comparator<? super E> ordering)
     {
         this.ordering = ordering;
@@ -89,7 +89,7 @@ public class OrderedList<E extends Comparable<E>>
      *
      * @post the ordered list is empty
      */
-	// 清單清空
+    // 清單清空
     public void clear()
     {
         data = null;
@@ -104,27 +104,35 @@ public class OrderedList<E extends Comparable<E>>
      * 
      * @param value The value to be added to the list
      */
-	// 清單加入 value 元素,保持排序
+    // 清單加入 value 元素,保持排序
     public void add(E value)
     {
-        Node<E> previous = null; // element to adjust
-        Node<E> finger = data;   // target element
+        Node<E> previous = null; // element to adjust, 指向finger前一個節點
+        Node<E> finger = data;   // target element, finger從首節點找起
+        
         // search for the correct location
+        // 繼續條件: finger 非空  且  finger.value < value
         while ((finger != null) &&
                ordering.compare(finger.value(),value) < 0)
         {
-            previous = finger;
-            finger = finger.next();
+            previous = finger;  // previous指向finger節點
+            finger = finger.next();  // finger指向下一個節點
         }
+        // 跳出條件: finger 為空 或 finger.value >= value
+        
         // spot is found, insert
+        // 原來: previous -> previous.next
+        // 目標: previous -> data -> previous.next
         if (previous == null) // check for insert at top
         {
+            // 特例
             data = new Node<E>(value,data);
         } else {
+            // 通例
             previous.setNext(
                new Node<E>(value,previous.next()));
         }
-        count++;
+        count++; // 長度加1
     }
 
     /**
@@ -136,16 +144,20 @@ public class OrderedList<E extends Comparable<E>>
      * @param value The value sought in the list
      * @return The actual value found, or null, if not
      */
-	// 回傳清單是否含有value元素的布林值
+    // 回傳清單是否含有value元素的布林值
     public boolean contains(E value)
     {
-        Node<E> finger = data; // target
+        Node<E> finger = data; // target 從首節點找起
         // search down list until we fall off or find bigger value
+        // 繼續條件: finger 非空  且  finger.value < value
         while ((finger != null) &&
                ordering.compare(finger.value(),value) < 0)
         {
-            finger = finger.next();
+            finger = finger.next(); // finger指向下一個節點
         }
+        // 跳出條件: finger 為空 或 finger.value >= value
+
+        // finger指向null表示找不到, finger指向value節點表示找到
         return finger != null && value.equals(finger.value());
     }
 
@@ -159,33 +171,41 @@ public class OrderedList<E extends Comparable<E>>
      * @param value The value to be removed
      * @return The actual value removed from the list
      */
-	// 清單刪除value元素
+    // 清單刪除value元素
     public E remove(E value)
     {
-        Node<E> previous = null; // element to adjust
-        Node<E> finger = data;   // target element
+        Node<E> previous = null; // element to adjust 指向finger前一個節點
+        Node<E> finger = data;   // target element finger從首節點找起
         // search for value or fall off list
+        // 繼續條件: finger 非空  且  finger.value < value
         while ((finger != null) &&
                ordering.compare(finger.value(),value) < 0)
         {
-            previous = finger;
-            finger = finger.next();
+            previous = finger;  // previous指向finger節點
+            finger = finger.next(); // finger指向下一個節點
         }
+        // 跳出條件: finger 為空 或 finger.value >= value
+
         // did we find it?
-        if ((finger != null) && value.equals(finger.value())) {
-            // yes, remove it
-            if (previous == null)  // at top? 
+         if ((finger != null) && value.equals(finger.value())) {
+           // yes, remove it
+           // 找到時,finger指向欲刪除節點
+           // 原來:  previous -> finger -> finger.next
+           // 目標:  previous -> finger.next
+           if (previous == null)  // at top? 
             {
+                // 特例, 首節點指標指向finger.next
                 data = finger.next();
             } else {
+                // 通例, previous指向finger.next
                 previous.setNext(finger.next());
             }
-            count--;
+            count--; // 長度減1
             // return value
-            return finger.value();
+            return finger.value(); // 回傳刪除值
         }
         // return nonvalue
-        return null;
+        return null; // 未找到
     }
 
     /**
@@ -195,7 +215,7 @@ public class OrderedList<E extends Comparable<E>>
      * 
      * @return The number of elements in the list
      */
-	// 回傳清單長度
+    // 回傳清單長度
     public int size()
     {
         return count;
@@ -208,7 +228,7 @@ public class OrderedList<E extends Comparable<E>>
      * 
      * @return True if the ordered list is empty
      */
-	// 回傳清單空否布林值
+    // 回傳清單空否布林值
     public boolean isEmpty()
     {
         return size() == 0;
@@ -222,7 +242,7 @@ public class OrderedList<E extends Comparable<E>>
      * 
      * @return An iterator traversing elements in ascending order
      */
-	// 取得迭代器
+    // 回傳清單迭代器
     public Iterator<E> iterator()
     {
         return new SinglyLinkedListIterator<E>(data);
@@ -235,7 +255,7 @@ public class OrderedList<E extends Comparable<E>>
      * 
      * @return String representing ordered list
      */
-	// 回傳有序清單內容字串,元素間用空格隔開
+    // 回傳有序清單內容字串，元素間用空格隔開
     public String toString()
     {
         StringBuffer s = new StringBuffer();

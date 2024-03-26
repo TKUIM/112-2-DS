@@ -7,10 +7,7 @@
 */
 
 package ch09_lists;
-import java.util.AbstractList;
 import java.util.Iterator;
-import java.util.List;
-
 import structure5.Assert;
 /**
  * An implementation of lists using doubly linked elements, similar to that of {@link java.util.LinkedList java.util.LinkedList}.

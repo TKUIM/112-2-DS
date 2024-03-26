@@ -8,8 +8,6 @@
 
 package ch09_lists;
 import java.util.Iterator;
-import java.util.List;
-import java.util.AbstractList;
 import java.util.Enumeration;
 import structure5.Assert;
 /**

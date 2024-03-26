@@ -4,10 +4,10 @@
 
 package ch03_vectors;
 // package structure5;
-import ch09_lists.AbstractList;
 import structure5.Assert;
 import java.util.Iterator;
 import java.util.Collection;
+import structure5.AbstractList;
 
 /**
  * An implementation of extensible arrays, similar to that of {@link java.util.Vector java.util.Vector}.
@@ -35,6 +35,7 @@ import java.util.Collection;
  * @version $Id: Vector.java 31 2007-08-06 17:19:56Z bailey $
  * @since JavaStructures 1.0
  */
+// 向量
 public class Vector<E> extends AbstractList<E> implements Cloneable
 {
     /**
@@ -72,6 +73,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @post constructs a vector with capacity for 10 elements
      */
+    // 建構空向量，初始容量defaultCapacity
     public Vector()
     {
         this(defaultCapacity); // call one-parameter constructor
@@ -85,6 +87,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @post constructs an empty vector with initialCapacity capacity
      * @param initialCapacity The size of vector before reallocation is necessary
      */
+    // 建構空向量，初始容量initialCapacity
     public Vector(int initialCapacity)
     {
         Assert.pre(initialCapacity >= 0,"Capacity must not be negative");
@@ -105,6 +108,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param capacityIncr The size of growth of vector.
      * @see #capacityIncrement
      */
+    // 建構空向量，初始容量initialCapacity，容量增量capcityIncr
     public Vector(int initialCapacity, int capacityIncr)
     {
         Assert.pre(initialCapacity >= 0, "Capacity must not be negative.");
@@ -115,8 +119,8 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
         capacityIncrement = capacityIncr;
         initialValue = null;
     }
-
     /**
+
      * Construct a vector with initial size, growth rate and default
      * value.
      *
@@ -129,6 +133,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param capacityIncr The size of the increment when vector grows.
      * @param initValue The initial value stored in vector elements.
      */
+    // 建構空向量，初始容量initialCapacity，容量增量capcityIncr，初值initValue
     public Vector(int initialCapacity, int capacityIncr, E initValue)
     {
         Assert.pre(initialCapacity >= 0, "Nonnegative capacity.");
@@ -138,11 +143,13 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
         initialValue = initValue;
     }
     
+    // 匯入that向量，建立向量
     public Vector(Vector<E> that)
     {
         this(that.values());
     }
 
+    // 匯入c收藏，建立向量
     public Vector(Collection<E> c)
     {
         this(c.size());
@@ -163,6 +170,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @param minCapacity The minimum size of array before expansion. 擴展前最小容量
      */
+    // 確保容量滿足 minCapacity 值以上，必要時擴展容量
     public void ensureCapacity(int minCapacity)
     {
         // 若陣列容量不足，進行容量擴充
@@ -211,6 +219,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @param obj The object to be added to the end of the vector.
      */
+    // 新增尾元素obj
     public void add(E obj)
     {
         ensureCapacity(elementCount+1);
@@ -226,6 +235,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @param obj The object to be added to the end of the vector.
      */
+    // 新增尾元素o
     public void addElement(E o)
     {
         add(o);
@@ -238,6 +248,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param element the element to be removed.
      * @return the element actually removed, or if none, null.
      */
+    // 刪除第一個element元素
     public E remove(E element)
     {
         E result = null;
@@ -258,6 +269,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @return The size of the array underlying the vector.
      */
+    // 回傳容量
     public int capacity()
     {
         return elementData.length;
@@ -272,7 +284,8 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @return A copy of the original vector.
      */
-@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
+    // 拷貝回傳新向量
     public Object clone()
     {
         Vector<E> copy = null;
@@ -292,6 +305,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param elem The value sought.
      * @return True iff the value appears in the vector.
      */
+    // 包含elem元素否
     public boolean contains(E elem)
     {
         int i;
@@ -311,6 +325,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @param dest An array of size at least size(). 
      */
+    // 拷貝元素到dest陣列，dest陣列假設夠大
     public void copyInto(Object dest[])
     {
         int i;
@@ -329,6 +344,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param index The index of the value sought.
      * @return A reference to the value found in the vector.
      */
+    //  回傳index位置的元素
     public E elementAt(int index)
     {
         Assert.pre(0 <= index && index < size(),"index is within bounds");
@@ -346,7 +362,8 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param index The index of the value sought.
      * @return A reference to the value found in the vector.
      */
-@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
+    //  回傳index位置的元素
     public E get(int index)
     {
         return (E)elementData[index];
@@ -361,6 +378,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      *       view elements of vector
      * @return an iterator to traverse the vector.
      */
+    // 回傳向量的迭代器
     public Iterator<E> iterator()
     {
         return new VectorIterator<E>(this);
@@ -374,6 +392,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @return Access to the first element of the vector.
      */
+    // 回傳首元素
     public E firstElement()
     {
         return get(0);
@@ -388,6 +407,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param elem The value sought in vector.
      * @return The index of the first occurrence of the value.
      */
+    // 回傳第一個elem元素位置
     public int indexOf(E elem)
     {
         return indexOf(elem,0);
@@ -403,6 +423,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param index The first location considered.
      * @return The index of the first location, or -1 if not found.
      */
+    // 回傳從index位置開始的第一個elem元素位置
     public int indexOf(E elem, int index)
     {
         int i;
@@ -425,6 +446,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param index The location of the new value.
      *
      */
+    // 在index位置加入obj元素
     public void insertElementAt(E obj, int index)
     {
         add(index,obj);
@@ -441,6 +463,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param obj the value to be inserted. 元素
      * @param index the location of the new value. 加入位置
      */
+    // 在index位置加入obj元素
     public void add(int index, E obj)
     {
         int i;
@@ -482,6 +505,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @return True iff the vector is empty.
      */
+    // 回傳向量空否
     public boolean isEmpty()
     {
         return size() == 0;
@@ -495,6 +519,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @return A reference to the last value.
      */
+    // 回傳尾元素
     public E lastElement()
     {
         return get(elementCount-1);
@@ -509,6 +534,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param obj The value sought.
      * @return The index of the last occurrence in the vector.
      */
+    // // 回傳由尾往前第一個elem元素位置
     public int lastIndexOf(E obj)
     {
         return lastIndexOf(obj,elementCount-1);
@@ -526,6 +552,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param index The last acceptable index.
      * @return The index of the last occurrence of the value, or -1 if none.
      */
+    // 回傳從index位置開始，由尾往前，第一個elem元素位置
     public int lastIndexOf(E obj, int index)
     {
         int i;
@@ -540,6 +567,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      *
      * @post vector is empty
      */
+    // 刪除所有元素
     public void clear()
     {
         setSize(0);
@@ -553,6 +581,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      *
      * @see #clear
      */
+    // 刪除所有元素
     public void removeAllElements()
     {
         setSize(0);
@@ -583,6 +612,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @param where The location of the element to be removed.
      */
+    // 刪除向量where位置的值，後面值往前遞補，最後位置填null
     public void removeElementAt(int where)
     {
         remove(where);
@@ -596,6 +626,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @param where The location of the element to be removed.
      */
+    // 刪除向量where位置的值，後面值往前遞補，最後位置填null，回傳刪除值
     public E remove(int where)
     {
         E result = get(where);
@@ -617,6 +648,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param obj The new value to be stored.
      * @param index The index of the new value.
      */
+    // 覆蓋向量index位置的值為obj
     public void setElementAt(E obj, int index)
     {
         set(index,obj);
@@ -631,7 +663,8 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * @param obj The new value to be stored.
      * @param index The index of the new value.
      */
-@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
+    // 覆蓋向量index位置的值為obj，回傳舊值
     public E set(int index, E obj)
     {
         Assert.pre(0 <= index && index < elementCount,"index is within bounds");
@@ -649,6 +682,9 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @param newSize The ultimate size of the vector.
      */
+    // 設定向量新長度為newSize
+    //   若新長度 < 使用量, 則新長度之後設為空值
+    //   若新長度 >= 使用量, 則使用量之後設為initialValue
     public void setSize(int newSize)
     {
         int i;
@@ -669,6 +705,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @return The number of elements within the vector.
      */
+    // 回傳長度
     public int size()
     {
         return elementCount;
@@ -679,6 +716,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      *
      * @post minimizes allocated size of vector
      */
+    // 容量縮為使用量
     public void trimToSize()
     {
         Object newElementData[] = new Object[elementCount];
@@ -693,6 +731,7 @@ public class Vector<E> extends AbstractList<E> implements Cloneable
      * 
      * @return A string representation for the vector.
      */
+    // 回傳向量內容字串
     public String toString()
     {
         StringBuffer sb = new StringBuffer();

@@ -30,7 +30,6 @@ import structure5.ReadStream;
 import structure5.ComparableAssociation;
 import structure5.OrderedStructure;
 import structure5.OrderedList;
-import java.util.Iterator;
 
 public class ParkingLot2
 {
@@ -140,35 +139,35 @@ public class ParkingLot2
         }
         System.out.println(free.size()+" slots remain available.");
     }
-}
 
-// 車位空格
-class Space
-{   // structure describing parking space
-    public final static int COMPACT = 0; // small space 小型
-    public final static int MINIVAN = 1; // medium space 中型
-    public final static int TRUCK = 2;   // large space 大型
-    protected int number;       // address in parking lot 車位編號
-    protected int size;         // size of space 車位型別, 0,1,2
-    
-    // 建立一格車位，車位編號n，型別s=0,1,2
-    public Space(int n, int s)
-    // post: construct parking space #n, size s
-    {
-        number = n;
-        size = s;
-    }
-    
-    // 判別本車位和other車位兩者型別是否相同
-    public boolean equals(Object other)
-    // pre: other is not null
-    // post: true iff spaces are equivalent size
-    {
-        Space that = (Space)other; // 轉型為車位才能取型別欄位
-        return this.size == that.size; // 只比較兩者型別相同否
+
+    // 車位空格
+    static class Space
+    {   // structure describing parking space
+        public final static int COMPACT = 0; // small space 小型
+        public final static int MINIVAN = 1; // medium space 中型
+        public final static int TRUCK = 2;   // large space 大型
+        protected int number;       // address in parking lot 車位編號
+        protected int size;         // size of space 車位型別, 0,1,2
+
+        // 建立一格車位，車位編號n，型別s=0,1,2
+        public Space(int n, int s)
+        // post: construct parking space #n, size s
+        {
+            number = n;
+            size = s;
+        }
+
+        // 判別本車位和other車位兩者型別是否相同
+        public boolean equals(Object other)
+        // pre: other is not null
+        // post: true iff spaces are equivalent size
+        {
+            Space that = (Space)other; // 轉型為車位才能取型別欄位
+            return this.size == that.size; // 只比較兩者型別相同否
+        }
     }
 }
-
 
 /*
  Interaction
