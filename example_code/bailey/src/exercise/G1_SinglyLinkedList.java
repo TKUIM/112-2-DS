@@ -1,6 +1,6 @@
 /*
 * G1_SinglyLinkedList.java
-*   單鍵結單向鏈結清單內含長度、首節點、尾節點三欄位，
+*   單向鏈結清單內含長度、首節點、尾節點三欄位，
 *   添加首元素和尾元素的測試場景。
 *
 * > java G1_SinglyLinkedList
