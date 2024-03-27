@@ -1,6 +1,11 @@
 /*
 *  MyOrderedList.java 簡化版有序清單
 *    省去比較器，泛型的設計
+*
+* > java MyOrderedList
+<MyOrderedList:1>
+<MyOrderedList:3>
+contains(1): false
 */
 
 package ch11_ordered_structures;
@@ -12,12 +17,12 @@ public class MyOrderedList
 
     int count; // number of values in list 長度
 
-    class Node
+    class Node  // 節點
     {
-        int value;
-        Node next;
+        int value; // 元素
+        Node next; // 下一個節點指標
         
-        public String toString()
+        public String toString()  // 回傳節點內容字串
         {
             return String.format("%d", value);
         }
@@ -243,18 +248,9 @@ public class MyOrderedList
         StringBuffer s = new StringBuffer();
         s.append("<MyOrderedList:");
 
-        // 待補程式碼列印有序清單內容
-        Node n = head;
-        while(n!=null)
-        {
-            if(n!=head)
-            {
-                s.append(",");
-            }
-            s.append(n);
-            n = n.next;
-        }
-        
+        // 待補程式碼，以迴圈列印有序清單內容
+        s.append(head);
+         
         s.append(">");
         return s.toString();
     }
@@ -266,5 +262,8 @@ public class MyOrderedList
         ol.add(3);
         ol.add(1);
         System.out.println(ol);
+        ol.remove(1);
+        System.out.println(ol);
+        System.out.println("contains(1): " + ol.contains(1));
     }
 }
