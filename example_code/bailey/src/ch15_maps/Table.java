@@ -1,9 +1,22 @@
 // An implementation of an OrderedDictionary.
 // (c) 1998, 2001 duane a. bailey
 
-package structure5;
+package ch15_maps;
+
 import java.util.Iterator;
 import java.util.Map.Entry;
+import structure5.AbstractMap;
+import structure5.Association;
+import structure5.ComparableAssociation;
+import structure5.List;
+import structure5.OrderedMap;
+import structure5.OrderedStructure;
+import structure5.ReadStream;
+import structure5.Set;
+import structure5.SetList;
+import structure5.SinglyLinkedList;
+import structure5.SplayTree;
+import structure5.Structure;
 
 /**
  * An implementation of an ordered dictionary.  Key-value pairs are 

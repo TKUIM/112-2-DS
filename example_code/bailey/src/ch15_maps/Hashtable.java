@@ -57,11 +57,11 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
      * Reserved locations are available for insertion,
      * but cause collisions on lookup.
      */
-    protected static final String RESERVED = "RESERVED";  // 保留格專用字串
+    protected static final String RESERVED = "RESERVED";  // 保留格專用字串，程式未使用
     /**
      * The data associated with the hashtable.
      */
-    protected Vector<HashAssociation<K,V>> data; // 存放雜湊配對元素的向量
+    protected Vector<HashAssociation<K,V>> data; // 存放雜湊配對元素(K,V)的向量
     /**
      * The number of key-value pairs in table.
      */
@@ -114,7 +114,7 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
     {
         int i;
         for (i = 0; i < data.size(); i++) {
-            data.set(i,null);
+            data.set(i,null); // 每格填null，還原成空白格
         }
         count = 0;
     }
@@ -157,7 +157,7 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
     // 包含value值否
     public boolean containsValue(V value)
     {
-        for (V tableValue : this) {
+        for (V tableValue : this) {  // 呼叫iterator()，進行值的迭代
             if (tableValue.equals(value)) return true;
         }
         // no value found
@@ -176,7 +176,10 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
     // 包含key鍵否
     public boolean containsKey(K key)
     {
-        int hash = locate(key);
+        int hash = locate(key); // 回傳可能存放key鍵格子的下標
+        
+        // 若下標所在格非空白格，且非保留格
+        // 表示找到，回傳真；否則回傳假
         return data.get(hash) != null && !data.get(hash).reserved();
     }   
 
@@ -206,9 +209,13 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
     // 回傳key鍵對應的值
     public V get(K key)
     {
-        int hash = locate(key);
+        int hash = locate(key);  // 回傳可能存放key鍵格子的下標
+        
+        // 若下標所在格為空白格或保留格，表示找不到，回傳null
         if (data.get(hash) == null ||
             data.get(hash).reserved()) return null;
+        
+        // 否則，表示找到，回傳下標所在格的配對值
         return data.get(hash).getValue();
     }
 
@@ -225,31 +232,44 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
         return new KeyIterator<K,V>(new HashtableIterator<K,V>(data));
     }
 
-    // 回傳key鍵的雜湊值
+    // 若找到key鍵所在格，回傳所在格的下標位置
+    // 若找不到key鍵所在格，回傳其應放保留格或空白格的下標位置
     protected int locate(K key)
     {
         // compute an initial hash code
+        // 從key鍵取得雜湊值，當成初始下標位置
         int hash = Math.abs(key.hashCode() % data.size());
+        
         // keep track of first unused slot, in case we need it
+        // 進入迴圈，找尋key鍵所在格(若找得到)，或應放置的保留格或空白格(若找不到)
         int reservedSlot = -1;
-        boolean foundReserved = false;
+        boolean foundReserved = false;  // 假設從未遇過保留格
         while (data.get(hash) != null)
         {
             if (data.get(hash).reserved()) {
                 // remember reserved slot if we fail to locate value
                 if (!foundReserved) {
-                    reservedSlot = hash;
-                    foundReserved = true;
+                    // 如果目前下標格為第1次遇到的保留格，則記錄目前下標位置
+                    reservedSlot = hash;  // 記錄目前下標位置
+                    foundReserved = true;  // 設定遇過保留格
                 }
             } else  {
                 // value located? return the index in table
+                // 如果目前下標格非空白格，也非保留格，且儲存的鍵符合key，則表示找到，回傳下標值
                 if (key.equals(data.get(hash).getKey())) return hash;
             }
+            
+            // 如果目前下標格非空白格，也非保留格，但儲存的鍵不符合key，表示發生踫撞
+            // 則採用線性找空位法，往下一格找空白格
             // linear probing; other methods would change this line:
             hash = (1+hash)%data.size();
         }
+        // 遇到目前下標格為空白格，迴圈跳出
+
         // return first empty slot we encountered
+        // 如果從未遇過保留格，則回傳目前空白格下標位置
         if (!foundReserved) return hash;
+        // 如果曾遇過保留格，則回傳第1次遇到的保留格下標位置
         else return reservedSlot;
     }
 
@@ -264,23 +284,29 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
      * @return The old value associated with key if previously present.
      */
     // 存放鍵值配對(key,value)
+    // 若新增，回傳null
+    // 若覆蓋，回傳舊值
     public V put(K key, V value)
     {
         if (maximumLoadFactor*data.size() <= (1+count)) {
-            extend();
+            extend();  // 若用量超過容量60%負載比，則雜湊表容量進行倍增擴展
         }
-        int hash = locate(key);
+        int hash = locate(key); // 回傳可能存放key鍵格子的下標
+        
+        // 如果目前下標格為空白格，或保留格
+        // 則於該位置放入鍵值(key,value)配對
         if (data.get(hash) == null || data.get(hash).reserved())
         {   // logically empty slot; just add association
             data.set(hash,new HashAssociation<K,V>(key,value));
             count++;
-            return null;
+            return null; // 若新增，回傳null
         } else {
+            // 否則，
             // full slot; add new and return old value
             HashAssociation<K,V> a = data.get(hash);
             V oldValue = a.getValue();
             a.setValue(value);
-            return oldValue;
+            return oldValue;  // 若覆蓋，回傳舊值
         }
     }
     /**
@@ -293,6 +319,7 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
     // 匯入other雜湊映射
     public void putAll(Map<K,V> other)
     {
+        // 列舉other映射的項目集合，逐一加入雜湊表
         for (Association<K,V> e : other.entrySet())
         {
             put(e.getKey(),e.getValue());
@@ -310,16 +337,21 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
      * @return The value associated with the removed key.
      */
     // 移除key鍵值配對
+    // 若移除成功，回傳舊值
+    // 若移除失敗,回傳空值
     public V remove(K key)
     {
-        int hash = locate(key);
+        int hash = locate(key); // 回傳可能存放key鍵格子的下標
+        
+        // 如果目前下標格為空白格，或保留格
+        // 表示找不到，回傳空值
         if (data.get(hash) == null || data.get(hash).reserved()) {
             return null;
         }
         count--;
-        V oldValue = data.get(hash).getValue();
-        data.get(hash).reserve(); // in case anyone depends on us
-        return oldValue;
+        V oldValue = data.get(hash).getValue(); // 備份舊值
+        data.get(hash).reserve(); // in case anyone depends on us 設定該格為保留格
+        return oldValue; // 回傳舊值
     }
 
     /**
@@ -334,29 +366,31 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
         // BE AWARE: at this point, we can change the hash table,
         // but changes to the hashtable traversal implementation might
         // be problematic.
-        int newSize = 2*data.size();
+        int newSize = 2*data.size();  // 2倍容量
         Assert.condition(newSize > 0, "Hashtable vector size must be greater than 0.");
         data = new Vector<HashAssociation<K,V>>();
         data.setSize(newSize);
         count = 0;
-        while (it.hasNext())
+        while (it.hasNext())  // 拷貝迴圈
         {
-            Association<K,V> a = it.next();
-            put(a.getKey(),a.getValue());
+            Association<K,V> a = it.next(); // 迭代取出下個配對
+            put(a.getKey(),a.getValue()); // 加入下個配對
         }
     }
 
     /**
      * @post returns a set of Associations associated with this Map
      */
-    // 回傳所有鍵值配對的集合
+    // 回傳所有鍵值配對的條目集合
     public Set<Association<K,V>> entrySet()
     {
-        Set<Association<K,V>> result = new SetList<Association<K,V>>();
+        Set<Association<K,V>> result = new SetList<Association<K,V>>(); // 建立空的集合清單
         Iterator<Association<K,V>> i = new HashtableIterator<K,V>(data);
+        
+        // 拷貝迴圈
         while (i.hasNext())
         {
-            result.add(i.next());
+            result.add(i.next()); // 迭代取出下個配對，加入集合
         }
         return result;
     }
@@ -364,14 +398,16 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
     /**
      * @post returns a Set of keys used in this Map
      */
-    // 回傳所有鍵的集合
+    // 回傳存放所有鍵的集合
     public Set<K> keySet()
     {
-        Set<K> result = new SetList<K>();
+        Set<K> result = new SetList<K>();  // 建立空的集合清單
         Iterator<K> i = new KeyIterator<K,V>(new HashtableIterator<K,V>(data));
+        
+        // 拷貝迴圈
         while (i.hasNext())
         {
-            result.add(i.next());
+            result.add(i.next()); // 逐一列舉鍵，加入集合清單
         }
         return result;
     }
@@ -380,14 +416,16 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
      * @post returns a Structure that contains the (possibly repeating) 
      * values of the range of this map.
      */
-    // 回傳所有值的結構
+    // 回傳存放所有值的結構
     public Structure<V> values()
     {
-        List<V> result = new SinglyLinkedList<V>();
+        List<V> result = new SinglyLinkedList<V>(); // 建立空的單鏈結清單
         Iterator<V> i = new ValueIterator<K,V>(new HashtableIterator<K,V>(data));
+        
+        // 拷貝迴圈
         while (i.hasNext())
         {
-            result.add(i.next());
+            result.add(i.next()) ;// 逐一列舉值，加入集合清單
         }
         return result;
     }
@@ -408,6 +446,8 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
 
         s.append("<Hashtable: size="+size()+" capacity="+data.size());
         Iterator<Association<K,V>> hi = new HashtableIterator<K,V>(data);
+        
+        // 列舉迴圈
         while (hi.hasNext()) {
             Association<K,V> a = hi.next();
             s.append(" key="+a.getKey()+", value="+a.getValue());

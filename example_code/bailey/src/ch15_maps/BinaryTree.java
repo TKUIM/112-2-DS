@@ -1,8 +1,11 @@
 // An implementation of nodes for use in binary trees.
 // (c) 1998, 2001 duane a. bailey
-package structure5;
+package ch15_maps;
+
 import java.lang.Math;
 import java.util.Iterator;
+import structure5.AbstractIterator;
+import structure5.Assert;
 
 /**
  * This class implements a single node of a binary tree.  It is a
@@ -517,6 +520,12 @@ public class BinaryTree<E>
         else s.append(" -");
         s.append('>');
         return s.toString();
+    }
+
+    private static class BTInorderIterator<T> {
+
+        public BTInorderIterator(BinaryTree<E> aThis) {
+        }
     }
 }
 

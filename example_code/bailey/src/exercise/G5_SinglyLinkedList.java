@@ -57,12 +57,12 @@ public class G5_SinglyLinkedList  // 單鏈結清單
    }
    
    // 將co收藏內元素循序加入清單尾
-   public void importFrom(Collection co)
+   public void importFrom(Collection<Integer> co)
    {
    }
    
    // 回傳清單元素循序匯出於的新收藏容器內
-   public Collection export()
+   public Collection<Integer> export()
    {
      return null;
    }

@@ -1,4 +1,4 @@
-package structure5;
+package ch15_maps;
 /**
  * An interface the supports a Map whose values are kept
  * in increasing order.  Values stored within an OrderedMap

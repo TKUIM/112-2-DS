@@ -1,7 +1,12 @@
+package ch15_maps;
+
 // (c) 1997, 2001 duane a. bailey
-import structure5.*;
+import structure5.Map;
 import java.util.Iterator;
 import java.io.*;
+import structure5.Assert;
+import structure5.DoublyLinkedList;
+import structure5.List;
 
 public class Index
 {
@@ -15,7 +20,7 @@ public class Index
               ...
              */
             // allocate the symbol table (uses comparable keys)
-            Map<String,List<Integer>> t = new Table<String,List<Integer>>();
+            Map<String,List<Integer>> t = new Table<>();
             int token;
             // we'll not consider period as part of identifier
             s.ordinaryChar('.');

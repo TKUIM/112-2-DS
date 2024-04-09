@@ -16,9 +16,12 @@ import structure5.Association;
  * @author 2006 duane a. bailey
  * @see Hashtable, Association
  */
+// 雜湊配對
 public class HashAssociation<K,V> extends Association<K,V>
 {
+    // 除了繼承配對的(key,value)欄位，還新增保留否欄位，供雜湊表保留刪除配對格之用
     protected boolean reserved;
+    
     public HashAssociation(K key, V value)
     {
         super(key,value);
