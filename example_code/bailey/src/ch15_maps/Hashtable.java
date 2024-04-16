@@ -244,6 +244,8 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
         // 進入迴圈，找尋key鍵所在格(若找得到)，或應放置的保留格或空白格(若找不到)
         int reservedSlot = -1;
         boolean foundReserved = false;  // 假設從未遇過保留格
+        
+        // 迴圈跳出條件: A.遇到存在格，表示找到；B.遇到空白格，表示找不到
         while (data.get(hash) != null)
         {
             if (data.get(hash).reserved()) {
@@ -255,7 +257,8 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
                 }
             } else  {
                 // value located? return the index in table
-                // 如果目前下標格非空白格，也非保留格，且儲存的鍵符合key，則表示找到，回傳下標值
+                // 如果目前下標格非空白格，也非保留格，且儲存的鍵符合key，
+                // 則A.遇到存在格，表示找到，跳出迴圈及方法，回傳下標值
                 if (key.equals(data.get(hash).getKey())) return hash;
             }
             
@@ -264,12 +267,12 @@ public class Hashtable<K,V> implements Map<K,V>, Iterable<V>
             // linear probing; other methods would change this line:
             hash = (1+hash)%data.size();
         }
-        // 遇到目前下標格為空白格，迴圈跳出
+        // B.遇到空白格，迴圈跳出
 
         // return first empty slot we encountered
-        // 如果從未遇過保留格，則回傳目前空白格下標位置
+        // 如果從未遇過保留格，則回傳空白格下標
         if (!foundReserved) return hash;
-        // 如果曾遇過保留格，則回傳第1次遇到的保留格下標位置
+        // 如果曾遇過保留格，則回傳第1次遇到的保留格下標
         else return reservedSlot;
     }
 
