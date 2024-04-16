@@ -4,16 +4,18 @@
   mapList.put/containsKey/get
 ### Map 映射介面
   size/isEmpty/equals/hashCode/containsKey/containsValue/get/keySet/values/entrySet  
-  put/puAll/remove/clear
+  put/putAll/remove/clear
 ### MapList.java 映射清單
   keySet/entrySet/values  
   put
 ### Hashtable.java 雜湊表
-  利用向量容器存放(K,V)配對資料 Vector<HashAssociation<K,V>>  
-  格子初值為null表示空白，放配對物件表示佔用，放(RESERVED,)配對物件表示刪除保留  
-  int locate(K key)負責回傳key鍵所在格子下標  
-  get/containsValue/containsKey/remove/values  
-  put/remove
+    利用向量容器存放(K,V)配對資料 Vector<HashAssociation<K,V>>  
+    格子初值為null表示空白格
+        放置未設定保留的配對物件表示佔用格，放置設定保留的配對物件表示保留格  
+    int locate(K key) 回傳可能放置key鍵的所在格下標  
+        若找不到，下標格為空白格或保留格；若找到，下標格為佔用格。  
+    get/containsValue/containsKey/remove/values  
+    put/remove
 ### AbstractStructure.java 抽象結構
   hashCode 利用迭代元素計算雜湊碼
 ### BinaryTree.java 二分樹
