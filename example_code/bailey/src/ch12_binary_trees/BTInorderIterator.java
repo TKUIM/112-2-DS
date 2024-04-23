@@ -1,3 +1,8 @@
+/*
+*  BTInorderIterator.java
+*    二分樹的中序走訪迭代器
+*    利用todo待走訪祖先節點堆疊，輔助走訪
+*/
 // In-order iterator for binary trees.
 // (c) 1998, 2001 duane a. bailey
 package ch12_binary_trees;

@@ -7,10 +7,11 @@ import structure5.Vector;
 import java.util.Random;
 import java.util.Iterator;
 
+// 六子棋盤
 public class HexBoard
 {
-    protected int board[];
-    protected int rows, cols;
+    protected int board[];  // 九宮格棋盤內容
+    protected int rows, cols; // 棋盤列數及行數
     Vector whiteMoves, blackMoves;
     public final static char WHITE = 'o';
     public final static char BLACK = '*';

@@ -1,3 +1,8 @@
+/*
+*  BTLevelorderIterator.java
+*    二分樹的逐層走訪迭代器
+*    利用todo待走訪親戚節點佇列，輔助走訪
+*/
 // Level-order iterator for binary trees.
 // (c) 1998, 2001 duane a. bailey
 package ch12_binary_trees;
