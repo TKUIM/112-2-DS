@@ -6,20 +6,38 @@
 Dorothy
 Lucretia
 Nancy
+<BinaryTree George <BinaryTree Prescott <BinaryTree Samuel <BinaryTree Rev. James - -> <BinaryTree Harriet - ->> <BinaryTree Flora <BinaryTree Robert - -> <BinaryTree Mary - ->>> <BinaryTree Dorothy <BinaryTree George <BinaryTree David - -> <BinaryTree Martha - ->> <BinaryTree Lucretia <BinaryTree James II <BinaryTree William - -> <BinaryTree Sarah - ->> <BinaryTree Nancy - ->>>>
+<George : Root>
+	|<Prescott : L>
+	|	|<Samuel : L>
+	|	|	|<Rev. James : L>
+	|	|	|<Harriet : R>
+	|	|<Flora : R>
+	|	|	|<Robert : L>
+	|	|	|<Mary : R>
+	|<Dorothy : R>
+	|	|<George : L>
+	|	|	|<David : L>
+	|	|	|<Martha : R>
+	|	|<Lucretia : R>
+	|	|	|<James II : L>
+	|	|	|	|<William : L>
+	|	|	|	|<Sarah : R>
+	|	|	|<Nancy : R>
+
 
 -----------------------------------------
 Note: George Bush 四代家譜表, # 表父親, - 表母親
-                                               # Rev. James Bush
-                              # Samuel Bush    - Harriet Fay
-
-                                               # Robert Sheldom
-            # Prescott Bush   - Flora Sheldon  - Mary Butler
-George Bush
-            - Dorothy Walker  # George Walker  # David Walker
-                                               - Martha Beaky
-                                                                 # William Wear
-                              - Lucretial Wear # James II Wear   - Sarah Yancey
                                                - Nancy Holliday
+                              - Lucretial Wear # James II Wear   - Sarah Yancey
+                                                                 # William Wear
+                                               - Martha Beaky
+            - Dorothy Walker  # George Walker  # David Walker
+George Bush
+            # Prescott Bush   - Flora Sheldon  - Mary Butler
+                                               # Robert Sheldom
+                              # Samuel Bush    - Harriet Fay 
+                                               # Rev. James Bush
 */
 package ch12_binary_trees;
 //import structure5.*;
@@ -75,6 +93,10 @@ public class Pedigree
         // or keep a reference to the pedigree before the update:
         BinaryTree<String> SAYancey = new BinaryTree<String>("Sarah");
         JHWear.setRight(SAYancey);
+        
+        System.out.println(GHWBush);
+        
+        System.out.println(GHWBush.treeString());
     }
 }
 /*

@@ -7,6 +7,16 @@
 *
 > java Calc
 -1
+<BinaryTree ch12_binary_trees.operator@614c5515 <BinaryTree ch12_binary_trees.variable@77b52d12 - -> <BinaryTree ch12_binary_trees.operator@2d554825 <BinaryTree ch12_binary_trees.value@68837a77 - -> <BinaryTree ch12_binary_trees.operator@6be46e8f <BinaryTree ch12_binary_trees.operator@3567135c <BinaryTree ch12_binary_trees.variable@327471b5 - -> <BinaryTree ch12_binary_trees.value@4157f54e - ->> <BinaryTree ch12_binary_trees.value@90f6bfd - ->>>>
+<ch12_binary_trees.operator@614c5515 : Root>
+	|<ch12_binary_trees.variable@77b52d12 : L>
+	|<ch12_binary_trees.operator@2d554825 : R>
+	|	|<ch12_binary_trees.value@68837a77 : L>
+	|	|<ch12_binary_trees.operator@6be46e8f : R>
+	|	|	|<ch12_binary_trees.operator@3567135c : L>
+	|	|	|	|<ch12_binary_trees.variable@327471b5 : L>
+	|	|	|	|<ch12_binary_trees.value@4157f54e : R>
+	|	|	|<ch12_binary_trees.value@90f6bfd : R>
 
 */
 package ch12_binary_trees;
@@ -73,6 +83,9 @@ public class Calc
         // evaluate and print expression
         // 求值及列印
         System.out.println(eval(t));
+        
+        System.out.println(t);
+        System.out.println(t.treeString());
     }
 }
 /*
