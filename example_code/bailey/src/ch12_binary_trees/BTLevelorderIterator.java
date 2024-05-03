@@ -71,7 +71,7 @@ class BTLevelorderIterator<E> extends AbstractIterator<E>
     {
         todo.clear();
         // empty queue, add root
-        if (!root.isEmpty()) todo.enqueue(root);
+        if (!root.isEmpty()) todo.enqueue(root); // 佇列加入樹根
     }
 
     /**
@@ -109,8 +109,10 @@ class BTLevelorderIterator<E> extends AbstractIterator<E>
      */
     public E next()
     {
-        BinaryTree<E> current = todo.dequeue();
+        BinaryTree<E> current = todo.dequeue();  // 佇列取出列印節點
         E result = current.value();
+        
+        // 佇列依序加入左,右小孩
         if (!current.left().isEmpty())
             todo.enqueue(current.left());
         if (!current.right().isEmpty())

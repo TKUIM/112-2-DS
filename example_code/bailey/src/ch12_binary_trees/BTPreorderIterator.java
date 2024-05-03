@@ -2,6 +2,7 @@
 *  BTPreorderIterator.java
 *    二分樹的前序走訪迭代器
 *    利用todo待走訪節點堆疊，輔助走訪
+*    堆疊壓入樹根,堆疊彈出列印節點,堆疊分別壓入節點右小孩,左小孩
 */
 // Pre-order iterator for binary trees.
 // (c) 1998, 2001 duane a. bailey
@@ -67,7 +68,7 @@ class BTPreorderIterator<E> extends AbstractIterator<E>
     public void reset()
     {
         todo.clear(); // stack is empty; push on root
-        if (root != null) todo.push(root);
+        if (root != null) todo.push(root); // 堆疊壓入樹根
     }
 
     /**
@@ -106,9 +107,10 @@ class BTPreorderIterator<E> extends AbstractIterator<E>
      */
     public E next()
     {
-        BinaryTree<E> old = todo.pop();
+        BinaryTree<E> old = todo.pop(); // 堆疊彈出列印節點
         E result = old.value();
         
+        // 堆疊分別壓入節點右小孩,左小孩
         if (!old.right().isEmpty()) todo.push(old.right());
         if (!old.left().isEmpty()) todo.push(old.left());
         return result;

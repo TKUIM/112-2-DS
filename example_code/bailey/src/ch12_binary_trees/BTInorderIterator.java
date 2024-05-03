@@ -2,6 +2,7 @@
 *  BTInorderIterator.java
 *    二分樹的中序走訪迭代器
 *    利用todo待走訪祖先節點堆疊，輔助走訪
+*    堆疊壓入樹根所有左小孩,堆疊彈出列印節點,堆疊分別壓入節點右子樹所有左小孩
 */
 // In-order iterator for binary trees.
 // (c) 1998, 2001 duane a. bailey
@@ -72,6 +73,7 @@ class BTInorderIterator<E> extends AbstractIterator<E>
         todo.clear();
         // stack is empty.  Push on nodes from root to
         // leftmost descendant
+        // 堆疊壓入樹根所有左小孩
         BinaryTree<E> current = root;
         while (!current.isEmpty()) {
             todo.push(current);
@@ -113,13 +115,16 @@ class BTInorderIterator<E> extends AbstractIterator<E>
      */
     public E next()
     {
+        // 堆疊彈出列印節點
         BinaryTree<E> old = todo.pop();
         E result = old.value();
+        
         // we know this node has no unconsidered left children;
         // if this node has a right child, 
         //   we push the right child and its leftmost descendants:
         // else 
         //   top element of stack is next node to be visited
+        // 堆疊分別壓入節點右子樹所有左小孩
         if (!old.right().isEmpty()) {
             BinaryTree<E> current = old.right();
             do {

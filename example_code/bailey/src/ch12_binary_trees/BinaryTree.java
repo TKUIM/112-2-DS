@@ -11,26 +11,27 @@ import structure5.Assert;
  * recursive structure.  Relationships between nodes are 
  * doubly linked, with parent and child references.  Many characteristics
  * of trees may be detected with static methods.
+ * 本設計樹和樹根節點兩者不分，都以樹作代表；空小孩有串接虛節點；親子節點互相指向對方
  *
  * @version $Id: BinaryTree.java 34 2007-08-09 14:43:44Z bailey $
  * @author, 2001 duane a. bailey
  * @see structure.BinaryTree
  * @see structure.BinarySearchTree
  */
-public class BinaryTree<E>
+public class BinaryTree<E>  // 二分樹
 {
     /**
      * The value associated with this node
      */
-    protected E val; // value associated with node
+    protected E val; // value associated with node 樹根節點值
     /**
      * The parent of this node
      */
-    protected BinaryTree<E> parent; // parent of node
+    protected BinaryTree<E> parent; // parent of node 樹根親節點指標
     /**
      * The left child of this node, or an "empty" node
      */
-    protected BinaryTree<E> left, right; // children of node
+    protected BinaryTree<E> left, right; // children of node 樹根左,右小孩指標
 
     /**
      * A one-time constructor, for constructing empty trees.
@@ -39,10 +40,10 @@ public class BinaryTree<E>
      * @post Constructor that generates an empty node
      * @return an empty node
      */
-    public BinaryTree()
+    public BinaryTree() // 建空樹
     {
-        val = null;
-        parent = null; left = right = this;
+        val = null;  // 樹根值為空
+        parent = null; left = right = this; // 親節點為空，左右小孩指向自己
     }
 
     /**
@@ -52,11 +53,11 @@ public class BinaryTree<E>
      * @post Returns a tree referencing value and two empty subtrees
      * @param value A (possibly null) value to be referenced by node
      */
-    public BinaryTree(E value)
+    public BinaryTree(E value) // 建單節點樹,值為value
     {
         Assert.pre(value != null, "Tree values must be non-null.");
         val = value;
-        right = left = new BinaryTree<E>();
+        right = left = new BinaryTree<E>();  // 左,右小孩為空樹，有虛節點設計
         setLeft(left);
         setRight(right);
     }
@@ -70,13 +71,14 @@ public class BinaryTree<E>
      * @param left The subtree to be left subtree of node
      * @param right The subtree to be right subtree of node
      */
+    // 建立二分樹，樹根值value，左子樹left，右子樹right
     public BinaryTree(E value, BinaryTree<E> left, BinaryTree<E> right)
     {
         Assert.pre(value != null, "Tree values must be non-null.");
         val = value;
-        if (left == null) { left = new BinaryTree<E>(); }
+        if (left == null) { left = new BinaryTree<E>(); }  // 若無左小孩,接空樹
         setLeft(left);
-        if (right == null) { right = new BinaryTree<E>(); }
+        if (right == null) { right = new BinaryTree<E>(); } // 若無右小孩,接空樹
         setRight(right);
     }
 
@@ -87,6 +89,7 @@ public class BinaryTree<E>
      *
      * @return The left subtree of this node
      */
+    // 回傳左子樹
     public BinaryTree<E> left()
     {
         return left;
@@ -99,6 +102,7 @@ public class BinaryTree<E>
      * 
      * @return The right subtree of this node
      */
+    // 回傳右子樹
     public BinaryTree<E> right()
     {
         return right;
@@ -111,6 +115,7 @@ public class BinaryTree<E>
      * 
      * @return Reference to parent of this node
      */
+    // 回傳親節點/樹
     public BinaryTree<E> parent()
     {
         return parent;
@@ -125,6 +130,7 @@ public class BinaryTree<E>
      * 
      * @param newLeft The root of the new left subtree
      */
+    // 修改newRight二分樹為自己左子樹
     public void setLeft(BinaryTree<E> newLeft)
     {
         if (isEmpty()) return;
@@ -142,6 +148,7 @@ public class BinaryTree<E>
      * 
      * @param newRight A reference to the new right subtree of this node
      */
+    // 修改newRight二分樹為自己右子樹
     public void setRight(BinaryTree<E> newRight)
     {
         if (isEmpty()) return;
@@ -157,6 +164,7 @@ public class BinaryTree<E>
      *
      * @param newParent A reference to the new parent of this node
      */
+    // 修改newParent節點/樹為親節點
     protected void setParent(BinaryTree<E> newParent)
     {
         if (!isEmpty()) {
@@ -170,6 +178,7 @@ public class BinaryTree<E>
      * @post Returns the size of the subtree
      * @return Size of subtree
      */
+    // 回傳元素個數
     public int size()
     {
         if (isEmpty()) return 0;
@@ -182,6 +191,7 @@ public class BinaryTree<E>
      * @post Returns the root of the tree node n
      * @return Root of tree
      */
+    // 回傳樹根節點/樹
     public BinaryTree<E> root()
     {
         if (parent() == null) return this;
@@ -195,9 +205,10 @@ public class BinaryTree<E>
      * @post Returns the height of a node in its tree
      * @return The height of the node in the tree
      */
+    // 回傳樹高度 (邉數)
     public int height()
     {
-        if (isEmpty()) return -1;
+        if (isEmpty()) return -1; // 有虛節點,空樹高度-1,擁有2空樹的節點高度為0
         return 1 + Math.max(left.height(),right.height());
     }
 
@@ -208,6 +219,7 @@ public class BinaryTree<E>
      * @post Returns the depth of a node in the tree
      * @return The path length to root of tree
      */
+    // 回傳節點/樹離樹根的深度 (邊數)
     public int depth()
     {
         if (parent() == null) return 0;
@@ -221,10 +233,15 @@ public class BinaryTree<E>
      * @post Returns true iff the tree rooted at node is full
      * @return True iff tree is full
      */
+    // 回傳樹長滿否
     public boolean isFull()
     {
-        if (isEmpty()) return true;
+        if (isEmpty()) return true;  // 空樹視為長滿
+        
+        // 左右子樹若高度不同，則樹未長滿
         if (left().height() != right().height()) return false;
+        
+        // 左右子樹皆長滿，自己才算長滿，其餘不算長滿
         return left().isFull() && right().isFull();
     }
 
@@ -233,6 +250,7 @@ public class BinaryTree<E>
      * @post Returns true iff the tree rooted at node is empty
      * @return True iff tree is empty
      */
+    // 回傳樹空否
     public boolean isEmpty()
     {
         return val == null;
@@ -245,12 +263,13 @@ public class BinaryTree<E>
      * @post Returns true iff the tree rooted at node is complete
      * @return True iff the subtree is complete
      */
+    // 回傳樹是否長全的布林值
     public boolean isComplete()
     {
         int leftHeight, rightHeight;
         boolean leftIsFull, rightIsFull;
         boolean leftIsComplete, rightIsComplete;
-        if (isEmpty()) return true;
+        if (isEmpty()) return true; // 空樹視為長全
         leftHeight = left().height();
         rightHeight = right().height();
         leftIsFull = left().isFull();
@@ -259,12 +278,16 @@ public class BinaryTree<E>
         rightIsComplete = right().isComplete();
 
         // case 1: left is full, right is complete, heights same
+        //        左子樹長滿,右子樹長全,兩者高度相同
         if (leftIsFull && rightIsComplete &&
             (leftHeight == rightHeight)) return true;
+
         // case 2: left is complete, right is full, heights differ
+        //        左子樹長全,右子樹長滿,左子樹比右子樹高度多1
         if (leftIsComplete && rightIsFull &&
             (leftHeight == (rightHeight + 1))) return true;
-        return false;
+
+        return false;  // 其他則未長全
     }
 
     /**
@@ -275,9 +298,14 @@ public class BinaryTree<E>
      * @post Returns true iff the tree rooted at node is balanced
      * @return True if tree is height balanced
      */
+    // 回傳樹左右平衡否布林值
     public boolean isBalanced()
     {
-        if (isEmpty()) return true;
+        if (isEmpty()) return true; // 空樹為平衡樹
+        // 平衡樹須滿足3條件:
+        //    1.左子樹平衡
+        //    2.右子樹平衡
+        //    3.左右子樹高度差為0或1
         return (Math.abs(left().height()-right().height()) <= 1) &&
                left().isBalanced() && right().isBalanced();
     }
@@ -289,6 +317,7 @@ public class BinaryTree<E>
      * 
      * @return In-order iterator on subtree rooted at this
      */
+    // 回傳中序迭代器
     public Iterator<E> iterator()
     {
         return inorderIterator();
@@ -302,6 +331,7 @@ public class BinaryTree<E>
      * 
      * @return AbstractIterator to traverse subtree
      */
+    // 回傳前序迭代器
     public AbstractIterator<E> preorderIterator()
     {
         return new BTPreorderIterator<E>(this);
@@ -315,6 +345,7 @@ public class BinaryTree<E>
      * 
      * @return An in-order iterator over descendants of node
      */
+    // 回傳中序迭代器
     public AbstractIterator<E> inorderIterator()
     {
         return  new BTInorderIterator<E>(this);
@@ -329,6 +360,7 @@ public class BinaryTree<E>
      * 
      * @return An iterator that traverses descendants of node in postorder
      */
+    // 回傳後序迭代器
     public AbstractIterator<E> postorderIterator()
     {
         return new BTPostorderIterator<E>(this);
@@ -343,6 +375,7 @@ public class BinaryTree<E>
      * 
      * @return An iterator to traverse subtree in level-order
      */
+    // 回傳逐層迭代器
     public AbstractIterator<E> levelorderIterator()
     {
         return new BTLevelorderIterator<E>(this);
@@ -356,6 +389,8 @@ public class BinaryTree<E>
      * @pre This node has a left subtree
      * @post Rotates local portion of tree so left child is root
      */
+    // 圍繞本節點/樹作右旋轉
+    // 必須有左小孩,讓左小孩變樹根,自己變其右小孩
     protected void rotateRight()
     {
         BinaryTree<E> parent = parent();
@@ -383,6 +418,8 @@ public class BinaryTree<E>
      * @pre This node has a right subtree
      * @post Rotates local portion of tree so right child is root
      */
+    // 圍繞本節點/樹作左旋轉
+    // 必須有右小孩,讓右小孩變樹根,自己變其左小孩
     protected void rotateLeft()
     {
         // all of this information must be grabbed before
@@ -412,6 +449,7 @@ public class BinaryTree<E>
      * 
      * @return True iff this node is a left child of parent
      */
+    // 回傳節點/樹是否為上一代左小孩的布林值
     public boolean isLeftChild()
     {
         if (parent() == null) return false;
@@ -425,6 +463,7 @@ public class BinaryTree<E>
      * 
      * @return True iff this node is a right child of parent
      */
+    // 回傳節點/樹是否為上一代右小孩的布林值
     public boolean isRightChild()
     {
         if (parent() == null) return false;
@@ -438,6 +477,7 @@ public class BinaryTree<E>
      * 
      * @return The node's value
      */
+    // 回傳節點/樹值
     public E value()
     {
         return val;
@@ -449,6 +489,7 @@ public class BinaryTree<E>
      * @post Sets the value associated with this node
      * @param value The new value of this node
      */
+    // 修改節點/樹值為value
     public void setValue(E value)
     {
         val = value;
@@ -457,6 +498,7 @@ public class BinaryTree<E>
     /**
      * @post return sum of hashcodes of the contained values
      */
+    // 回傳二分樹的雜湊碼
     public int hashCode()
     {
         if (isEmpty()) return 0;
@@ -471,6 +513,7 @@ public class BinaryTree<E>
      * 
      * @return A string representing the tree rooted at this node.
      */
+    // 回傳二分樹的多列圖示字串
     public String treeString(){
         String s = "";
         for (int i=0; i < this.depth(); i++){
@@ -494,6 +537,7 @@ public class BinaryTree<E>
      * is a right child, L if this node is a left child and Root if this
      * node is the root.
      */
+    // 回傳目前節點/樹為上一代的右/左小孩(R/L),或樹根(Root)
     private String getHand(){
         if (isRightChild()) return "R";
         if (isLeftChild()) return "L";
@@ -508,6 +552,7 @@ public class BinaryTree<E>
      * 
      * @return String representing this subtree
      */
+    // 回傳二分樹的單列內容字串
     public String toString()
     {
         if (isEmpty()) return "<BinaryTree: empty>";
