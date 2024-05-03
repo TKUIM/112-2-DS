@@ -32,6 +32,19 @@ END
 	|<<ComparableAssociation: one=unity> : L>
 	|	|<<ComparableAssociation: pi=three> : R>
 	|<<ComparableAssociation: unity=1> : R>
+
+Note: 
+  <BinarySearchTree:
+      <BinaryTree <ComparableAssociation: three=3> 
+          <BinaryTree <ComparableAssociation: one=unity> 
+             - 
+             <BinaryTree <ComparableAssociation: pi=three> - ->> 
+          <BinaryTree <ComparableAssociation: unity=1> - ->>>
+  or
+                            three=3
+        one=unity                          unity=1
+                  pi=three
+
 */
 // A simple symbol table for a postscript interpreter.
 // (c) 2001,1996, 2001 duane a. bailey

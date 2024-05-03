@@ -48,6 +48,7 @@ public class SplayTree<E extends Comparable<E>>
      * @post construct a new splay tree
      * 
      */
+    // 建立空伸展樹,排序用自然比較器
     public SplayTree()
     {
         this(new NaturalComparator<E>());
@@ -60,6 +61,7 @@ public class SplayTree<E extends Comparable<E>>
      * @param alternateOrder the ordering imposed on the values inserted
      * 
      */
+    // 建立空伸展樹,排序用alternateOrder比較器
     public SplayTree(Comparator<E> alternateOrder)
     {
         super(alternateOrder);
@@ -72,6 +74,8 @@ public class SplayTree<E extends Comparable<E>>
      * 
      * @param val The value to be xadded.
      */
+    // 添加val元素
+    // 若val元素非樹根,將其伸展成新樹根
     public void add(E val)
     {
         BinaryTree<E> newNode = new BinaryTree<E>(val,EMPTY,EMPTY);
@@ -113,6 +117,8 @@ public class SplayTree<E extends Comparable<E>>
      * @param val The comparable value to be found.
      * @return True iff the comparable value is within the tree.
      */
+    // 回傳包含val元素否布林值
+    // 若真,將val節點伸展成新樹根
     public boolean contains(E val)
     {
         if (root.isEmpty()) return false;
@@ -136,6 +142,9 @@ public class SplayTree<E extends Comparable<E>>
      * @param val The value to be sought in tree.
      * @return A reference to the value within the tree.
      */
+    // 回傳val元素
+    // 若成功, 回傳val元素
+    // 若失敗, 回傳空
     public E get(E val)
     {
         if (root.isEmpty()) return null;
@@ -156,11 +165,14 @@ public class SplayTree<E extends Comparable<E>>
      * @param val The value to be removed.
      * @return The actual value removed.
      */
+    // 刪除val元素
+    // 若成功,回傳刪除值,將其親節點伸展成新樹根
+    // 若失敗,回傳空
     public E remove(E val) 
     {
         if (isEmpty()) return null;
       
-        if (val.equals(root.value())) // delete root value
+        if (val.equals(root.value())) // delete root value 刪除根節點
         {
             BinaryTree<E> newroot = removeTop(root);
             count--;
@@ -170,6 +182,7 @@ public class SplayTree<E extends Comparable<E>>
         }
         else
         {
+            // 刪除非根節點
             BinaryTree<E> location = locate(root,val);
 
             if (val.equals(location.value())) {
@@ -180,6 +193,7 @@ public class SplayTree<E extends Comparable<E>>
                 } else {
                     parent.setLeft(removeTop(location));
                 }
+                // 將刪除節點的親節點伸展成新樹根
                 splay(root = parent);
                 return location.value();
             }
@@ -187,10 +201,12 @@ public class SplayTree<E extends Comparable<E>>
         return null;
     }
 
+    // 將splayedNode節點/樹，伸展到樹根，方便下回存取
     protected void splay(BinaryTree<E> splayedNode)
     {
         BinaryTree<E> parent,grandParent;
 
+        // 直到splayedNode成為樹根才停止伸展
         while ((parent = splayedNode.parent()) != null)
         {
             if ((grandParent = parent.parent()) == null)
@@ -239,6 +255,7 @@ public class SplayTree<E extends Comparable<E>>
      * 
      * @return An iterator to traverse the tree.
      */
+    // 回傳迭代器
     public Iterator<E> iterator()
     {
         return new SplayTreeIterator<E>(root,EMPTY);
@@ -251,6 +268,7 @@ public class SplayTree<E extends Comparable<E>>
      * 
      * @return A string representing the tree.
      */
+    // 回傳伸展樹單列內容字串
     public String toString()
     {
         StringBuffer s = new StringBuffer();

@@ -25,6 +25,11 @@ pi
 END
 
 [[<ComparableAssociation: one=unity>(<ComparableAssociation: pi=three>)]<ComparableAssociation: three=3>[<ComparableAssociation: unity=1>]]
+
+Note:
+                                     black:[three=3]
+    black:[one=unity]                                     black:[unity=1]
+                      red:(pi=three)            
 */
 // A simple symbol table for a postscript interpreter.
 // (c) 2001,1996, 2001 duane a. bailey
