@@ -3,6 +3,11 @@
 *    建立二分樹表示運算樹及求值
 *        R = 1 + (L - 1) * 2
 *
+*                =
+*           R            +
+*                   1             *
+*                            -         2
+*                           L   1
 *    註: R, L 初值為0
 *
 > java Calc
@@ -86,6 +91,9 @@ public class Calc
         
         System.out.println(t);
         System.out.println(t.treeString());
+        
+        System.out.println("t.depth():" + t.depth());
+        System.out.println("t.height():" + t.height());
     }
 }
 /*
