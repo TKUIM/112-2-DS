@@ -3,7 +3,6 @@
 
 package ch14_search_trees;
 import structure5.AbstractIterator;
-import structure5.BinaryTree;
 
 /**
  * 

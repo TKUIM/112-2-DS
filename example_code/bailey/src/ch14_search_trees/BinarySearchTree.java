@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Comparator;
 import structure5.AbstractStructure;
 import structure5.Assert;
-import structure5.BinaryTree;
 import structure5.NaturalComparator;
 import structure5.OrderedStructure;
 
