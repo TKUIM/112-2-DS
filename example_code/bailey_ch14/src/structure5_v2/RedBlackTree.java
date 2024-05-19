@@ -731,7 +731,8 @@ public class RedBlackTree<E extends Comparable<E>>
      * @pre tree is black-height balanced
      * @post returns the black height of this subtree
      */
-    protected int blackHeight()
+    // protected int blackHeight()
+    public int blackHeight()
     {
         if (isEmpty()) return 0;
         if (isBlack()) return 1 + left().blackHeight();
@@ -877,8 +878,10 @@ public class RedBlackTree<E extends Comparable<E>>
         s += ("<" + value() + " : " + 
               getHand() + " : " + getColor()+ ">\n");
         
-        if (left  != EMPTY) s += left.treeString();
-        if (right != EMPTY) s += right.treeString();
+        //if (left  != EMPTY) s += left.treeString();
+        //if (right != EMPTY) s += right.treeString();
+        if (left.isEmpty()==false) s += left.treeString();
+        if (right.isEmpty()==false) s += right.treeString();
 
         return s;
     }
