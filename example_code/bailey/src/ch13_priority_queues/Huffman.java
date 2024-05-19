@@ -1,12 +1,13 @@
 package ch13_priority_queues;
 
-import structure5.SinglyLinkedList;
 import java.util.Iterator;
 import java.util.Scanner;
 import structure5.Assert;
 import structure5.BinaryTree;
 import structure5.List;
 import structure5.OrderedList;
+import structure5.SinglyLinkedList;
+
 
 public class Huffman
 {

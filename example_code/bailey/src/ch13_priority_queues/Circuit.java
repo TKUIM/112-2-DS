@@ -1,8 +1,10 @@
 // A trivial application.
 // Save this application under a different name, and change the name of the class below.
 package ch13_priority_queues;
-//import structure5.*;
 import java.util.Iterator;
+import structure5.List;
+import structure5.PriorityQueue;
+import structure5.SinglyLinkedList;
 
 public class Circuit
 {
