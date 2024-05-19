@@ -524,8 +524,8 @@ public class BinaryTree<E>
 
     private static class BTInorderIterator<T> {
 
-        public BTInorderIterator(BinaryTree<E> aThis) {
-        }
+        //public BTInorderIterator(BinaryTree<E> aThis) {
+        //}
     }
 }
 

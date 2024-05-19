@@ -2,9 +2,17 @@
 // Keys need not be comparable.
 // (c) 1998, 2001 duane a. bailey
 
-package structure5;
+package ch15_maps;
 import java.util.Iterator;
 import java.lang.Math;
+import structure5.AbstractMap;
+import structure5.Association;
+import structure5.List;
+import structure5.Set;
+import structure5.SetList;
+import structure5.SinglyLinkedList;
+import structure5.Structure;
+import structure5.Vector;
 /**
  * This class implements a hash table whose collisions are resolved
  * through external chaining.  Values used as keys in this structure
@@ -37,7 +45,7 @@ import java.lang.Math;
  * @author, 2001 duane a. bailey
  * @see Hashtable
  */
-public class ChainedHashtable<K,V> extends AbstractMap<K,V> implements Map<K,V>, Iterable<V>
+public class ChainedHashtable<K,V> extends AbstractMap<K,V> implements Iterable<V>
 {
     /**
      * The array of chains used to store values.
