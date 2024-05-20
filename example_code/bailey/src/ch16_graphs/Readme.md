@@ -25,7 +25,7 @@
 利用相鄰矩陣記錄邊關係的無向圖形
 
 ### GraphList.java 清單版圖形  
-利用相鄰頂點清單記錄邊關係的圖形，具有(頂點，相鄰頂點)字典 dict，有向圖否 directed，共兩欄位
+利用相鄰頂點清單記錄邊關係的圖形，具有(標記,頂點)字典 dict，有向圖否 directed，共兩欄位
 
 #### GraphListVertex.java 清單版圖形頂點  
 圖形頂點，具有標記 label，拜訪過否 visited，相鄰邊結構 adjacencies，共三欄位
